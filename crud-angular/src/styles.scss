@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+html {
+  color-scheme: light;
+  @include mat.theme((
+    color: mat.$blue-palette,
+  ));
+}
+
+.darkMode {
+  @include mat.theme((
+    color: mat.$chartreuse-palette,
+    theme-type: dark,
+  ))
+}
+
+:host {
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

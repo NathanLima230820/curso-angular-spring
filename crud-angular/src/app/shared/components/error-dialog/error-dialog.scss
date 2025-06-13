@@ -1,0 +1,32 @@
+.error-h2{
+  padding-left: 20px;
+}
+
+.error-mat-dialog-content{
+  padding: 10px 24px 10px 24px;
+}
+section {
+  display: flex;
+  align-items: center;
+}
+
+.example-label {
+  font-size: 14px;
+  margin: 0 16px 0 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  max-width: 600px;
+  color: #343DFF;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
