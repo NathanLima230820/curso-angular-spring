@@ -1,5 +1,6 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError, Observable, of } from 'rxjs';
 import { AppMaterialModule } from '../../shared/app-material/app-material-module';
@@ -21,13 +22,14 @@ import { ErrorDialog } from '../../shared/components/error-dialog/error-dialog';
 })
 export class Courses implements OnInit{
 
-  displayedColumns = ['_id','name','category'];
+  displayedColumns = ['_id','name','category', 'actions'];
   courses$: Observable<Course[]> = new Observable<Course[]>();
-  // Removed loading flag as async pipe handles loading state
 
   constructor(
-    private CoursesService : CoursesService,
-    public dialog : MatDialog
+    private readonly CoursesService : CoursesService,
+    public dialog : MatDialog,
+    private Router: Router,
+    private route: ActivatedRoute
   ){}
 
   ngOnInit(){
@@ -44,6 +46,11 @@ export class Courses implements OnInit{
     this.dialog.open(ErrorDialog, {
       data: errorMsg
     });
+  }
+
+  onAdd(){
+    this.Router.navigate(['new'], {relativeTo: this.route})
+
   }
 
 }

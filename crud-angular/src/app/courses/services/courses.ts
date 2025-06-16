@@ -8,15 +8,15 @@ import { Course } from '../models/course';
 })
 export class CoursesService {
 
-  private readonly API = 'api/courses'
+  private readonly API = '/api/courses'
 
  constructor(private readonly http : HttpClient) {}
 
   getCourses(): Observable<Course[]>{
-  return this.http.get<Course[]>(this.API)
-  .pipe(
-    //delay(3000),
-    first());
- }
+    return this.http.get<Course[]>(this.API)
+      .pipe(
+      //delay(3000),
+       first());
+  }
 
 }
