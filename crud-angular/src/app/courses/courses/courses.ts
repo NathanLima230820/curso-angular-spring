@@ -28,8 +28,8 @@ export class Courses implements OnInit{
   constructor(
     private readonly CoursesService : CoursesService,
     public dialog : MatDialog,
-    private Router: Router,
-    private route: ActivatedRoute
+    private readonly Router: Router,
+    private readonly route: ActivatedRoute
   ){}
 
   ngOnInit(){

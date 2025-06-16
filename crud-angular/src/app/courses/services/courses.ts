@@ -19,4 +19,7 @@ export class CoursesService {
        first());
   }
 
+  insertOrUpdate(record: Course){
+    return this.http.post<Course>(this.API, record).pipe(first());
+  }
 }
