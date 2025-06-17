@@ -1,15 +1,12 @@
-.title {
-  background-color: #F6F2F7;
-  color: BLACK;
-  font-size: 18px;
+mat-card{
+  max-width: 80%;
+  margin: 2em auto;
+  text-align: center;
 }
 
-.loading-spinner{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  size: 5px;
-  padding: 30px;
+mat-toolbar {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 section {
@@ -37,6 +34,3 @@ section {
   flex-wrap: wrap;
 }
 
-.delete{
-  color: red;
-}

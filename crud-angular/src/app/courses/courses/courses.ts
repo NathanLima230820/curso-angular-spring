@@ -6,8 +6,9 @@ import { catchError, Observable, of } from 'rxjs';
 import { AppMaterialModule } from '../../shared/app-material/app-material-module';
 import { SharedModule } from '../../shared/shared-module';
 import { Course } from '../models/course';
-import { CoursesService } from './../services/courses';
+import { CoursesService } from '../services/courses.service';
 import { ErrorDialog } from '../../shared/components/error-dialog/error-dialog';
+import { CoursesGrid } from "../courses-grid/courses-grid";
 
 @Component({
   selector: 'app-courses',
@@ -16,13 +17,14 @@ import { ErrorDialog } from '../../shared/components/error-dialog/error-dialog';
     CommonModule,
     AppMaterialModule,
     SharedModule,
-  ],
+    CoursesGrid
+],
   templateUrl: './courses.html',
   styleUrls: ['./courses.scss']
 })
 export class Courses implements OnInit{
 
-  displayedColumns = ['_id','name','category', 'actions'];
+  
   courses$: Observable<Course[]> = new Observable<Course[]>();
 
   constructor(

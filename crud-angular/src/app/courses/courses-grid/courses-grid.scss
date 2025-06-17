@@ -1,0 +1,30 @@
+.delete{
+  color: red;
+}
+
+.loading-spinner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  size: 5px;
+  padding: 30px;
+}
+
+._id{
+  width: 70px;
+  max-width: 70px;
+  min-width: 30px;
+}
+
+mat-table{
+  overflow: auto;
+  max-height: 600px;
+}
+
+.action-column{
+  flex: 0 0 75px;
+}
+
+.action-column-header{
+  flex: 0 0 75px;
+}
