@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first, Observable } from 'rxjs';
+import { delay, first, Observable } from 'rxjs';
 import { Course } from '../models/course';
 
 @Injectable({
@@ -14,9 +14,9 @@ export class CoursesService {
 
   getCourses(): Observable<Course[]>{
     return this.http.get<Course[]>(this.API)
-      .pipe(
-      //delay(3000),
-       first());
+      .pipe(first(),
+       //delay(3000)
+       );
   }
 
   insertOrUpdate(record: Partial<Course>){

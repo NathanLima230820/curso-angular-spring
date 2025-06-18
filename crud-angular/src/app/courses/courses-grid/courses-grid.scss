@@ -2,14 +2,6 @@
   color: red;
 }
 
-.loading-spinner{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  size: 5px;
-  padding: 30px;
-}
-
 ._id{
   width: 70px;
   max-width: 70px;
@@ -22,9 +14,9 @@ mat-table{
 }
 
 .action-column{
-  flex: 0 0 75px;
+  flex: 0 0 120px;
 }
 
 .action-column-header{
-  flex: 0 0 75px;
+  flex: 0 0 100px;
 }

@@ -34,3 +34,10 @@ section {
   flex-wrap: wrap;
 }
 
+.loading-spinner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  size: 5px;
+  padding: 30px;
+}
