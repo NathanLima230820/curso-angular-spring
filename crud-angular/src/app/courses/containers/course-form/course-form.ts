@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AppMaterialModule } from '../../shared/app-material/app-material-module';
-import { CoursesService } from '../services/courses.service';
+import { AppMaterialModule } from '../../../shared/app-material/app-material-module';
+import { CoursesService } from '../../services/courses.service';
 
 
 @Component({
