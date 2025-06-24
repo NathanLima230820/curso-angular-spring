@@ -4,6 +4,8 @@ import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } f
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppMaterialModule } from '../../../shared/app-material/app-material-module';
 import { CoursesService } from '../../services/courses.service';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from '../../models/course';
 
 
 @Component({
@@ -18,6 +20,7 @@ import { CoursesService } from '../../services/courses.service';
 export class CourseForm implements OnInit{
 
     form!: FormGroup<{
+      _id: FormControl<string>,
     name: FormControl<string>,
     category: FormControl<string>
   }>;
@@ -25,7 +28,8 @@ export class CourseForm implements OnInit{
   private readonly snackBar = inject(MatSnackBar);
   constructor( private readonly formBuilder: NonNullableFormBuilder,
     private readonly service: CoursesService,
-    private readonly location: Location) {
+    private readonly location: Location,
+    private route: ActivatedRoute) {
     //this.form
   }
 
@@ -39,11 +43,15 @@ export class CourseForm implements OnInit{
   };
 
   ngOnInit(): void {
+    const course: Course = this.route.snapshot.data['course']
+    console.log(course)
+
     this.form = this.formBuilder.group({
-      name: this.formBuilder.control(''),
-      category: this.formBuilder.control('')
+      _id: [course._id],
+      name: this.formBuilder.control(course.name),
+      category: this.formBuilder.control(course.category)
     });
-  }
+    }
 
   private onSuccess(){
     this.snackBar.open('Curso salvo com sucesso!', '',{
