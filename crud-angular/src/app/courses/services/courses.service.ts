@@ -41,4 +41,9 @@ export class CoursesService {
   findById(id: string): Observable<Course> {
     return this.http.get<Course>(`${this.API}/${id}`);
   }
+
+  delete(id: string){
+    return this.http.delete(`${this.API}/${id}`).pipe(first());
+  }
+
 }

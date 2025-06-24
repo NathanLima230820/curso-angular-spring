@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, MaybeAsync, RedirectCommand, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { inject } from '@angular/core';
 import { Course } from '../models/course';
