@@ -1,1 +1,7 @@
-<p>confirmation-dialog works!</p>
+<mat-dialog-content>
+  <p>{{ data }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="onConfirm(true)">Sim</button>
+  <button matButton (click)="onConfirm(false)">Não</button>
+</mat-dialog-actions>

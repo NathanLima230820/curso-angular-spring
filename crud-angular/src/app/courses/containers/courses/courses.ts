@@ -10,6 +10,7 @@ import { CoursesService } from '../../services/courses.service';
 import { ErrorDialog } from '../../../shared/components/error-dialog/error-dialog';
 import { CoursesGrid } from "../../components/courses-grid/courses-grid";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationDialog } from '../../../shared/components/confirmation-dialog/confirmation-dialog';
 
 @Component({
   selector: 'app-courses',
@@ -66,7 +67,14 @@ export class Courses implements OnInit{
   }
 
   onDelete(courses: Course){
-    this.CoursesService.delete(courses._id).subscribe(
+
+    const dialogRef = this.dialog.open(ConfirmationDialog, {
+      data: 'Tem certeza que deseja remover esse curso?',
+    });
+
+    dialogRef.afterClosed().subscribe((result:boolean) => {
+      if (result) {
+        this.CoursesService.delete(courses._id).subscribe(
       () => {
         this.refresh();
         this.snackBar.open('Curso removido com sucesso!', 'X',{
@@ -77,6 +85,8 @@ export class Courses implements OnInit{
       },
       () => this.onError('Erro ao tentar remover curso.')
     );
+      }
+    });
   }
 
 }
