@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppMaterialModule } from '../../../shared/app-material/app-material-module';
 import { CoursesService } from '../../services/courses.service';
@@ -29,7 +29,7 @@ export class CourseForm implements OnInit{
   constructor( private readonly formBuilder: NonNullableFormBuilder,
     private readonly service: CoursesService,
     private readonly location: Location,
-    private route: ActivatedRoute) {
+    private readonly route: ActivatedRoute) {
     //this.form
   }
 
@@ -48,8 +48,8 @@ export class CourseForm implements OnInit{
 
     this.form = this.formBuilder.group({
       _id: [course._id],
-      name: this.formBuilder.control(course.name),
-      category: this.formBuilder.control(course.category)
+      name: [course.name, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      category: [course.category, Validators.required]
     });
     }
 
@@ -65,4 +65,29 @@ export class CourseForm implements OnInit{
             duration: 5000
           })
   };
+
+  getErrorMessage(fieldName: string){
+
+    const field = this.form.get(fieldName);
+
+    if(field?.hasError('required')){
+      return 'Campo obrigatório'
+    }
+
+    if(field?.hasError('minlength')){
+          return 'Campo com menos de 5 caracteres'
+        }
+
+    if(field?.hasError('maxlength')){
+          return 'Campo com mais de 100 caracteres'
+        }
+
+    return 'Campo Inválido'
+
+  }
+
+  onInput(event: Event){
+    const value = (event.target as HTMLInputElement).value;
+    this.form.get('name')?.setValue(value);
+  }
 }
