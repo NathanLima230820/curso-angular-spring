@@ -1,5 +1,8 @@
 package com.nathan.crud_spring.model;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -7,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -15,6 +20,8 @@ import lombok.Data;
 
 @Data
 @Entity
+@SQLDelete(sql = "UPDATE course SET status = 0 WHERE id = ?")
+@SQLRestriction("status = 1")
 public class Course {
     
     @Id
@@ -33,5 +40,11 @@ public class Course {
     @Pattern(regexp = "Back-end|Front-end")
     @Column(name = "categoria", length = 10, nullable = false)
     private String category;
+
+    @NotNull
+    @Min(0)
+    @Max(1)
+    @Column(length = 1, nullable = false)
+    private int status = 1;
 
 }

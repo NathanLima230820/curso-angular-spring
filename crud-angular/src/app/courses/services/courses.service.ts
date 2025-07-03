@@ -22,10 +22,8 @@ export class CoursesService {
   insertOrUpdate(record: Partial<Course>){
 
     if (record._id){
-      //console.log("update");
       return this.update(record);
     } else {
-      //console.log("insert");
       return this.insert(record);
     }
   }
