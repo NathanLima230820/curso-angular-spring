@@ -18,6 +18,7 @@ export class CoursesGrid {
   @Input() courses: Course[] = [];
   @Output() add = new EventEmitter
   @Output() edit = new EventEmitter
+  @Output() delete = new EventEmitter
 
   readonly displayedColumns = ['_id','name','category', 'actions'];
 
@@ -32,5 +33,9 @@ export class CoursesGrid {
 
   onEdit(courses: Course){
     this.edit.emit(courses);
+  }
+
+  onDelete(courses: Course){
+    this.delete.emit(courses)
   }
 }

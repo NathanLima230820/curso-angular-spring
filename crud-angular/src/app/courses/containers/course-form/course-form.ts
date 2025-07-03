@@ -1,9 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppMaterialModule } from '../../../shared/app-material/app-material-module';
 import { CoursesService } from '../../services/courses.service';
+import { ActivatedRoute } from '@angular/router';
+import { Course } from '../../models/course';
 
 
 @Component({
@@ -18,6 +20,7 @@ import { CoursesService } from '../../services/courses.service';
 export class CourseForm implements OnInit{
 
     form!: FormGroup<{
+      _id: FormControl<string>,
     name: FormControl<string>,
     category: FormControl<string>
   }>;
@@ -25,7 +28,8 @@ export class CourseForm implements OnInit{
   private readonly snackBar = inject(MatSnackBar);
   constructor( private readonly formBuilder: NonNullableFormBuilder,
     private readonly service: CoursesService,
-    private readonly location: Location) {
+    private readonly location: Location,
+    private readonly route: ActivatedRoute) {
     //this.form
   }
 
@@ -39,11 +43,15 @@ export class CourseForm implements OnInit{
   };
 
   ngOnInit(): void {
+    const course: Course = this.route.snapshot.data['course']
+    console.log(course)
+
     this.form = this.formBuilder.group({
-      name: this.formBuilder.control(''),
-      category: this.formBuilder.control('')
+      _id: [course._id],
+      name: [course.name, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      category: [course.category, Validators.required]
     });
-  }
+    }
 
   private onSuccess(){
     this.snackBar.open('Curso salvo com sucesso!', '',{
@@ -57,4 +65,29 @@ export class CourseForm implements OnInit{
             duration: 5000
           })
   };
+
+  getErrorMessage(fieldName: string){
+
+    const field = this.form.get(fieldName);
+
+    if(field?.hasError('required')){
+      return 'Campo obrigatório'
+    }
+
+    if(field?.hasError('minlength')){
+          return 'Campo com menos de 5 caracteres'
+        }
+
+    if(field?.hasError('maxlength')){
+          return 'Campo com mais de 100 caracteres'
+        }
+
+    return 'Campo Inválido'
+
+  }
+
+  onInput(event: Event){
+    const value = (event.target as HTMLInputElement).value;
+    this.form.get('name')?.setValue(value);
+  }
 }

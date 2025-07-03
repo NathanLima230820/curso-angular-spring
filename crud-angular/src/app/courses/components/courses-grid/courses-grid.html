@@ -33,7 +33,7 @@
           </button>
 
           <button matIconButton aria-label="Remover um curso" class="delete">
-            <mat-icon>delete</mat-icon>
+            <mat-icon (click)="onDelete(courses)">delete</mat-icon>
           </button>
         </mat-cell>
 
