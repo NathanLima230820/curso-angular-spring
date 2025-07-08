@@ -1,11 +1,15 @@
 package com.nathan.crud_spring.model;
 
+import com.nathan.crud_spring.enums.Category;
+import com.nathan.crud_spring.enums.converters.CategoryConverter;
+
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +18,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -25,7 +28,7 @@ import lombok.Data;
 public class Course {
     
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("_id")
     private int id;
 
@@ -36,10 +39,9 @@ public class Course {
     private String name;
 
     @NotNull
-    @Size(max = 10)
-    @Pattern(regexp = "Back-end|Front-end")
     @Column(name = "categoria", length = 10, nullable = false)
-    private String category;
+    @Convert(converter = CategoryConverter.class)
+    private Category category;
 
     @NotNull
     @Min(0)

@@ -2,6 +2,9 @@ package com.nathan.crud_spring;
 
 import com.nathan.crud_spring.model.Course;
 import com.nathan.crud_spring.repository.CourseRepository;
+
+import com.nathan.crud_spring.enums.Category;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,8 +30,7 @@ public class CrudSpringApplication {
 
 			Course c = new Course();
 			c.setName("Angular com Spring");
-			c.setCategory("Front-end");
-
+			c.setCategory(Category.FRONTEND);
 			courseRepository.save(c);
 		};
 	}

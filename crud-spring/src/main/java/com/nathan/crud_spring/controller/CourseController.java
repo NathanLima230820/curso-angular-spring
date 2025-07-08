@@ -3,7 +3,6 @@ package com.nathan.crud_spring.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nathan.crud_spring.model.Course;
+import com.nathan.crud_spring.dto.CourseDTO;
 import com.nathan.crud_spring.service.CoursesService;
 
 import jakarta.validation.Valid;
@@ -36,29 +35,29 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<Course> list() {
+    public List<CourseDTO> list() {
         return coursesService.list();
     }
 
     @GetMapping("/{id}")
-    public Course findById(@PathVariable @NotNull @Positive Long id){
+    public CourseDTO findById(@PathVariable @NotNull @Positive Integer id){
         return coursesService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Course insert(@RequestBody @Valid Course course){
+    public CourseDTO insert(@RequestBody @Valid @NotNull CourseDTO course){
         return coursesService.insert(course);
     }
     
     @PutMapping("/{id}")
-    public Course update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Course course) {
+    public CourseDTO update(@PathVariable @NotNull @Positive Integer id, @RequestBody @Valid @NotNull CourseDTO course) {
         return coursesService.update(id, course);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable @NotNull @Positive Long id){
+    public void delete(@PathVariable @NotNull @Positive Integer id){
       coursesService.delete(id);
     }
 
