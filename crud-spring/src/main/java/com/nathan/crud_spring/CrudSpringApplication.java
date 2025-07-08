@@ -1,6 +1,7 @@
 package com.nathan.crud_spring;
 
 import com.nathan.crud_spring.model.Course;
+import com.nathan.crud_spring.model.Lesson;
 import com.nathan.crud_spring.repository.CourseRepository;
 
 import com.nathan.crud_spring.enums.Category;
@@ -31,6 +32,12 @@ public class CrudSpringApplication {
 			Course c = new Course();
 			c.setName("Angular com Spring");
 			c.setCategory(Category.FRONTEND);
+
+			Lesson l = new Lesson();
+			l.setName("Introdução ao Angular");
+			l.setYoutubeUrl("https://www.youtube.com/watch?v=3qBXWUpo9fY");
+			l.setCourse(c);
+			c.getLessons().add(l);
 			courseRepository.save(c);
 		};
 	}
