@@ -33,11 +33,18 @@ public class CrudSpringApplication {
 			c.setName("Angular com Spring");
 			c.setCategory(Category.FRONTEND);
 
-			Lesson l = new Lesson();
-			l.setName("Introdução ao Angular");
-			l.setYoutubeUrl("https://www.youtube.com/watch?v=3qBXWUpo9fY");
-			l.setCourse(c);
-			c.getLessons().add(l);
+			Lesson l1 = new Lesson();
+			l1.setName("Introdução ao Angular");
+			l1.setYoutubeUrl("https://www.youtube.com/watch?v=3qBXWUpo9fY");
+			l1.setCourse(c);
+			c.getLessons().add(l1);
+			courseRepository.save(c);
+
+			Lesson l2 = new Lesson();
+			l2.setName("Introdução ao Spring");
+			l2.setYoutubeUrl("https://www.youtube.com/watch?v=3qBXWUpo9fY");
+			l2.setCourse(c);
+			c.getLessons().add(l2);
 			courseRepository.save(c);
 		};
 	}
