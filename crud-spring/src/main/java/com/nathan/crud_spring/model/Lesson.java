@@ -24,7 +24,7 @@ public class Lesson {
     @Column(name = "nome", length = 100, nullable = false)
     private String name;
 
-    @Column(name = "youtube_url", length = 200, nullable = false)
+    @Column(name = "youtube_url", length = 50, nullable = false)
     private String youtubeUrl;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

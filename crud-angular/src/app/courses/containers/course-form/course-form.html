@@ -21,10 +21,43 @@
             <option value="Front-end">Front-end</option>
             <option value="Back-end">Back-end</option>
           </select>
-          @if (form.get('category')?.invalid) {
-              <mat-error>{{getErrorMessage('category')}}</mat-error>
-            }
+      <mat-error *ngIf="form.get('category')?.invalid">{{getErrorMessage('category')}}</mat-error>
       </mat-form-field>
+
+      <mat-toolbar>
+        <span>Aulas</span>
+        <button mat-icon-button class="add-class" (click)="addLesson()">
+          <mat-icon aria-label="Adicionar uma aula">add</mat-icon>
+        </button>
+      </mat-toolbar>
+
+      <mat-error *ngIf="isFormArrayRequired()" class="form_array-error">Adicione pelo menos uma aula.</mat-error>
+
+      <table style="width: 100%;" formArrayName="lessons">
+        <tr *ngFor="let lesson of getLessonsFormArray(); let i = index" [formGroupName]="i">
+          <td style="width: 65%;">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Nome da Aula</mat-label>
+              <input matInput formControlName="name">
+              <mat-error *ngIf="getLessonsFormArray()[i].get('name')?.invalid">Campo inválido</mat-error>
+            </mat-form-field>
+          </td>
+          <td style="width: 35%;">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>URL</mat-label>
+              <span matTextPrefix>https://youtu.be/</span>
+              <input matInput formControlName="youtubeUrl">
+              <mat-error *ngIf="getLessonsFormArray()[i].get('youtubeUrl')?.invalid">Campo inválido</mat-error>
+            </mat-form-field>
+          </td>
+          <td>
+            <button matIconButton aria-label="Remover uma aula" class="delete" (click)="deleteLesson(i)">
+            <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </table>
+
     </form>
   </mat-card-content>
 

@@ -35,14 +35,14 @@ public class CrudSpringApplication {
 
 			Lesson l1 = new Lesson();
 			l1.setName("Introdução ao Angular");
-			l1.setYoutubeUrl("https://www.youtube.com/watch?v=3qBXWUpo9fY");
+			l1.setYoutubeUrl("watch?v=3qBXWUpo9fY");
 			l1.setCourse(c);
 			c.getLessons().add(l1);
 			courseRepository.save(c);
 
 			Lesson l2 = new Lesson();
 			l2.setName("Introdução ao Spring");
-			l2.setYoutubeUrl("https://www.youtube.com/watch?v=3qBXWUpo9fY");
+			l2.setYoutubeUrl("watch?v=3qBXWUpo9fY");
 			l2.setCourse(c);
 			c.getLessons().add(l2);
 			courseRepository.save(c);
