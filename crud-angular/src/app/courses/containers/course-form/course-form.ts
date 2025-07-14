@@ -7,6 +7,7 @@ import { CoursesService } from '../../services/courses.service';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../models/course';
 import { Lesson } from '../../models/lesson';
+import { FormUtils } from '../../../shared/form/form-utils.service';
 
 
 @Component({
@@ -27,9 +28,19 @@ export class CourseForm implements OnInit{
   constructor( private readonly formBuilder: NonNullableFormBuilder,
     private readonly service: CoursesService,
     private readonly location: Location,
-    private readonly route: ActivatedRoute) {
-    //this.form
+    private readonly route: ActivatedRoute,
+    public formUtils: FormUtils) {  }
+
+  ngOnInit(): void {
+  const course: Course = this.route.snapshot.data['course']
+  this.form = this.formBuilder.group({
+    _id: [course._id],
+    name: [course.name, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+    category: [course.category, Validators.required],
+    lessons: this.formBuilder.array(this.retrieveLessons(course), Validators.required)
+  });
   }
+
 
   onCancel(){
     this.location.back();
@@ -40,22 +51,11 @@ export class CourseForm implements OnInit{
       this.service.insertOrUpdate(this.form.value)
     .subscribe(result => this.onSuccess(), error => this.onError());
     } else{
-      alert('Formulário inválido')
+      this.formUtils.validateAllFormFields(this.form);
     }
 
   };
 
-  ngOnInit(): void {
-    const course: Course = this.route.snapshot.data['course']
-    console.log(course)
-
-    this.form = this.formBuilder.group({
-      _id: [course._id],
-      name: [course.name, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      category: [course.category, Validators.required],
-      lessons: this.formBuilder.array(this.retrieveLessons(course), Validators.required)
-    });
-    }
 
   private retrieveLessons(course: Course){
     const lessons = [];
@@ -92,27 +92,6 @@ export class CourseForm implements OnInit{
           })
   };
 
-  getErrorMessage(fieldName: string){
-
-    const field = this.form.get(fieldName);
-
-    if(field?.hasError('required')){
-      return 'Campo obrigatório'
-    }
-
-    if(field?.hasError('minlength')){
-      const requiredLenght : number = field.errors ? field.errors['minlength']['requiredLength'] : 5;
-          return `Campo com menos de ${requiredLenght} caracteres`
-        }
-
-    if(field?.hasError('maxlength')){
-      const requiredLength : number = field.errors ? field.errors['maxlength']['requiredLength'] : 100;
-      return `Campo com mais de ${requiredLength} caracteres`
-    }
-
-    return 'Campo Inválido'
-
-  }
 
   isFormArrayRequired() : boolean {
     const lessons = this.form.get('lessons') as UntypedFormArray;
