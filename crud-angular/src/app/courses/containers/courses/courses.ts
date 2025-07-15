@@ -1,8 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { AppMaterialModule } from '../../../shared/app-material/app-material-module';
 import { SharedModule } from '../../../shared/shared-module';
 import { Course } from '../../models/course';
@@ -11,6 +11,8 @@ import { ErrorDialog } from '../../../shared/components/error-dialog/error-dialo
 import { CoursesGrid } from "../../components/courses-grid/courses-grid";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialog } from '../../../shared/components/confirmation-dialog/confirmation-dialog';
+import { CoursePage } from '../../models/course-page';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-courses',
@@ -27,7 +29,12 @@ import { ConfirmationDialog } from '../../../shared/components/confirmation-dial
 export class Courses implements OnInit{
 
 
-  courses$: Observable<Course[]> | null = null;
+  courses$: Observable<CoursePage> | null = null;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  pageIndex = 0;
+  pageSize = 10;
 
   private readonly snackBar = inject(MatSnackBar);
   constructor(
@@ -41,16 +48,18 @@ export class Courses implements OnInit{
     this.refresh();
   }
 
-  refresh(){
-    this.courses$ = this.CoursesService.getCourses()
+refresh(pageEvent: PageEvent = {length: 0, pageIndex: 0, pageSize: 10}) {
+    this.courses$ = this.CoursesService.getCourses(pageEvent.pageIndex, pageEvent.pageSize)
     .pipe(
+      tap(() => {
+        this.pageIndex = pageEvent.pageIndex;
+        this.pageSize = pageEvent.pageSize;}),
       catchError(error =>{
-        this.onError('Erro ao carregar cursos.')
-        return of([])
+        this.onError('Erro ao carregar cursos.');
+        return of({courses: [], totalElements: 0, totalPages: 0});
       })
-      );
-  }
-
+    );
+}
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialog, {
       data: errorMsg
