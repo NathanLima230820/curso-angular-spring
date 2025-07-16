@@ -29,7 +29,7 @@ public class CrudSpringApplication {
 		return args -> {
 			courseRepository.deleteAll();
 
-			for (int i = 0; i <= 20; i++) {
+			for (int i = 0; i < 20; i++) {
 
 
 			Course c = new Course();
